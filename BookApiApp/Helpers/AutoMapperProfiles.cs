@@ -9,6 +9,8 @@ namespace BookApiApp.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<Country, CountriesToGetDto>();
+            CreateMap<Category, CategoriesToGetDto>();
+            CreateMap<Book, BooksToGetDto>();
         }
     }
 }
