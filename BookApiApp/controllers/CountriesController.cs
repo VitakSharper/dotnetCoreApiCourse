@@ -1,5 +1,8 @@
-﻿using BookApiApp.repository;
+﻿using AutoMapper;
+using BookApiApp.Dtos;
+using BookApiApp.repository;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookApiApp.controllers
@@ -9,10 +12,12 @@ namespace BookApiApp.controllers
     public class CountriesController : ControllerBase
     {
         private readonly ICountryRepository _repo;
+        private readonly IMapper _mapper;
 
-        public CountriesController(ICountryRepository repo)
+        public CountriesController(ICountryRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
 
@@ -21,9 +26,9 @@ namespace BookApiApp.controllers
         {
             var countries = await _repo.GetCountries();
 
+            var countriesToReturn = _mapper.Map<IEnumerable<CountriesToGetDto>>(countries);
 
-
-            return Ok(countries);
+            return Ok(countriesToReturn);
         }
     }
 }
