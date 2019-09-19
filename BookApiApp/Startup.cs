@@ -1,4 +1,5 @@
-﻿using BookApiApp.repository;
+﻿using AutoMapper;
+using BookApiApp.repository;
 using BookApiApp.services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,8 @@ namespace BookApiApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAutoMapper(typeof(CountryRepository).Assembly);
+
             var connectionString = Configuration["connectionStrings:bookDbConnectionString"];
             services.AddDbContext<BookDbContext>(c => c.UseSqlServer(connectionString));
 
