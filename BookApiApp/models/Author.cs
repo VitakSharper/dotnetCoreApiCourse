@@ -17,6 +17,6 @@ namespace BookApiApp.models
         [MaxLength(100, ErrorMessage = "First name cannot be more than 200 characters")]
         public string LastName { get; set; }
         public virtual Country Country { get; set; }
-        public virtual ICollection<BookAuthor> BookAuthor { get; set; }
+        public virtual ICollection<BookAuthor> BookAuthors { get; set; }
     }
 }
