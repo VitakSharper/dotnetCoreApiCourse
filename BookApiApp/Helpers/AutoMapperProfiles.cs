@@ -11,6 +11,7 @@ namespace BookApiApp.Helpers
             CreateMap<Country, CountriesToGetDto>();
             CreateMap<Category, CategoriesToGetDto>();
             CreateMap<Book, BooksToGetDto>();
+            CreateMap<Author, AuthorToGetDto>();
         }
     }
 }

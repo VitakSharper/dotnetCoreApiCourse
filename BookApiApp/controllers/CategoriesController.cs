@@ -71,9 +71,12 @@ namespace BookApiApp.controllers
 
         }
 
-        [HttpGet("books/{categoryId}")]
+        [HttpGet("{categoryId}/books")]
         public async Task<IActionResult> GetBooksForCategory(int categoryId)
         {
+            if (!await _repo.CategoryExists(categoryId))
+                return NotFound("Category not found!");
+
             var books = await _repo.GetBooksForCategory(categoryId);
 
             if (!ModelState.IsValid)

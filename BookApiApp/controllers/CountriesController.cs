@@ -22,8 +22,6 @@ namespace BookApiApp.controllers
 
 
         [HttpGet]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<CountriesToGetDto>))]
         public async Task<IActionResult> GetCountries()
         {
             var countries = await _repo.GetCountries();
@@ -34,7 +32,7 @@ namespace BookApiApp.controllers
             }
 
 
-            var countriesToReturn = _mapper.Map<IEnumerable<CountriesToGetDto>>(countries);
+            var countriesToReturn = _mapper.Map<ICollection<CountriesToGetDto>>(countries);
 
             return Ok(countriesToReturn);
         }
@@ -72,5 +70,20 @@ namespace BookApiApp.controllers
         }
 
         // TO DO GetAuthorsFromACountry
+
+        [HttpGet("{countryId}/authors")]
+        public async Task<IActionResult> GetAuthorsFromACountry(int countryId)
+        {
+            if (!await _repo.CountryExist(countryId))
+                return NotFound("Country not exists!");
+            var authors = await _repo.GetAuthorsFromACountry(countryId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var authorsToReturn = _mapper.Map<ICollection<AuthorToGetDto>>(authors);
+
+            return Ok(authorsToReturn);
+        }
     }
 }
