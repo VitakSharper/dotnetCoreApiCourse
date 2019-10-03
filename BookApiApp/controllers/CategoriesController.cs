@@ -13,11 +13,13 @@ namespace BookApiApp.controllers
     {
         private readonly ICategoryRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IBookRepository _bookRepo;
 
-        public CategoriesController(ICategoryRepository repo, IMapper mapper)
+        public CategoriesController(ICategoryRepository repo, IMapper mapper, IBookRepository bookRepo)
         {
             _repo = repo;
             _mapper = mapper;
+            _bookRepo = bookRepo;
         }
 
 
@@ -37,7 +39,6 @@ namespace BookApiApp.controllers
         }
 
         [HttpGet("{categoryId}")]
-
         public async Task<IActionResult> GetCategory(int categoryId)
         {
             if (!await _repo.CategoryExists(categoryId))
@@ -56,6 +57,10 @@ namespace BookApiApp.controllers
         [HttpGet("book/{bookId}")]
         public async Task<IActionResult> GetCategoriesOfABook(int bookId)
         {
+            if (!await _bookRepo.BookExistsById(bookId))
+            {
+                return NotFound("Book does not exist!");
+            }
 
             var categoriesOfABook = await _repo.GetCategoriesOfABook(bookId);
 

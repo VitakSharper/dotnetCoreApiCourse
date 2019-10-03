@@ -12,6 +12,6 @@ namespace BookApiApp.repository
         Task<bool> BookExistsById(int bookId);
         Task<bool> BookExistsByIsbn(string isbn);
         Task<bool> IsDuplicateIsbn(string isbn, int bookId);
-        Task<int> GetBookRating(int bookId);
+        Task<decimal> GetBookRating(int bookId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BookApiApp.models;
 using BookApiApp.services;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,6 +39,13 @@ namespace BookApiApp.repository
         public async Task<bool> CountryExist(int countryId)
         {
             return await _context.Countries.AnyAsync(c => c.Id == countryId);
+        }
+
+        public async Task<bool> IsCountryDuplicate(string countryName, int countryId)
+        {
+            return await _context.Countries.AnyAsync(c =>
+                string.Equals(c.Name, countryName.Trim(), StringComparison.InvariantCultureIgnoreCase) &&
+                c.Id != countryId);
         }
     }
 }

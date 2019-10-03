@@ -1,8 +1,8 @@
 ﻿using BookApiApp.models;
 using BookApiApp.services;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookApiApp.repository
@@ -15,24 +15,24 @@ namespace BookApiApp.repository
         {
             _context = context;
         }
-        public Task<ICollection<Review>> GetReviews()
+        public async Task<ICollection<Review>> GetReviews()
         {
-            throw new NotImplementedException();
+            return await _context.Reviews.OrderBy(r => r.Headline).ToListAsync();
         }
 
-        public Task<Review> GetReview(int reviewId)
+        public async Task<Review> GetReview(int reviewId)
         {
-            throw new NotImplementedException();
+            return await _context.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
         }
 
-        public Task<ICollection<Review>> GetReviewsOfABook(int bookId)
+        public async Task<ICollection<Review>> GetReviewsOfABook(int bookId)
         {
-            throw new NotImplementedException();
+            return await _context.Reviews.Where(b => b.Book.Id == bookId).ToListAsync();
         }
 
-        public Task<Book> GetBookOfAReview(int reviewId)
+        public async Task<Book> GetBookOfAReview(int reviewId)
         {
-            throw new NotImplementedException();
+            return await _context.Reviews.Where(r => r.Id == reviewId).Select(b => b.Book).SingleOrDefaultAsync();
         }
 
         public async Task<bool> ReviewExists(int reviewId)

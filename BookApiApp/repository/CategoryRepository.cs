@@ -1,6 +1,7 @@
 ﻿using BookApiApp.models;
 using BookApiApp.services;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +40,11 @@ namespace BookApiApp.repository
         public async Task<bool> CategoryExists(int id)
         {
             return await _context.Categories.AnyAsync(c => c.Id == id);
+        }
+
+        public async Task<bool> IsCategoryDuplicate(string categoryName, int catId)
+        {
+            return await _context.Categories.AnyAsync(c => string.Equals(c.Name, categoryName.Trim(), StringComparison.InvariantCultureIgnoreCase) && c.Id != catId);
         }
     }
 }
