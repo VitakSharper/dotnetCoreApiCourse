@@ -11,6 +11,7 @@ namespace BookApiApp.repository
         Task<Country> GetCountryOfAnAuthor(int authorId);
         Task<ICollection<Author>> GetAuthorsFromACountry(int countryId);
         Task<bool> CountryExist(int countryId);
+        Task<bool> CountryExistByName(string countryName);
         Task<bool> IsCountryDuplicate(string countryName, int countryId);
 
     }

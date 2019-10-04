@@ -1,5 +1,4 @@
 ﻿using BookApiApp.services;
-using System;
 using System.Threading.Tasks;
 
 namespace BookApiApp.repository
@@ -12,16 +11,23 @@ namespace BookApiApp.repository
         {
             _context = context;
         }
+
         public async Task<bool> Add<T>(T entity) where T : class
         {
-            var addEntity = await _context.AddAsync(entity);
-
-            return
+            await _context.AddAsync(entity);
+            return await Save();
         }
 
-        public Task<bool> Delete<T>(T entity) where T : class
+        public async Task<bool> Delete<T>(T entity) where T : class
         {
-            throw new NotImplementedException();
+            _context.Remove(entity);
+            return await Save();
+        }
+
+        public async Task<bool> Update<T>(T entity) where T : class
+        {
+            _context.Update(entity);
+            return await Save();
         }
 
         public async Task<bool> Save()
