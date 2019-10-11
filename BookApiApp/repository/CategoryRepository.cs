@@ -42,6 +42,11 @@ namespace BookApiApp.repository
             return await _context.Categories.AnyAsync(c => c.Id == id);
         }
 
+        public async Task<bool> CategoryExistsByName(string categoryName)
+        {
+            return await _context.Categories.AnyAsync(c => c.Name == categoryName);
+        }
+
         public async Task<bool> IsCategoryDuplicate(string categoryName, int catId)
         {
             return await _context.Categories.AnyAsync(c => string.Equals(c.Name, categoryName.Trim(), StringComparison.InvariantCultureIgnoreCase) && c.Id != catId);

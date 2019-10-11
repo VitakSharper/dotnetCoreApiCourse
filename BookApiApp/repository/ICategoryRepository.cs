@@ -11,6 +11,7 @@ namespace BookApiApp.repository
         Task<ICollection<Category>> GetCategoriesOfABook(int id);
         Task<ICollection<Book>> GetBooksForCategory(int id);
         Task<bool> CategoryExists(int id);
+        Task<bool> CategoryExistsByName(string categoryName);
         Task<bool> IsCategoryDuplicate(string categoryName, int id);
 
     }

@@ -99,9 +99,13 @@ namespace BookApiApp.controllers
             }
 
 
-            if (await _work.Add(country)) return CreatedAtRoute("GetCountry", new { countryId = country.Id }, country);
-            ModelState.AddModelError("", $"Something went wrong saving {country.Name}!!");
-            return StatusCode(500, ModelState);
+            if (!await _work.Add(country))
+            {
+                ModelState.AddModelError("", $"Something went wrong saving {country.Name}!!");
+                return StatusCode(500, ModelState);
+            }
+
+            return CreatedAtRoute("GetCountry", new { countryId = country.Id }, country);
         }
 
         [HttpPut("{countryId}")]

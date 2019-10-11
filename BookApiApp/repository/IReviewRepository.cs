@@ -11,5 +11,6 @@ namespace BookApiApp.repository
         Task<ICollection<Review>> GetReviewsOfABook(int bookId);
         Task<Book> GetBookOfAReview(int reviewId);
         Task<bool> ReviewExists(int reviewId);
+
     }
 }
